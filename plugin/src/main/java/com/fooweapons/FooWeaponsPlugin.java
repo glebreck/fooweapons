@@ -1,5 +1,6 @@
 package com.fooweapons;
 
+import com.fooweapons.feedback.SoundService;
 import com.fooweapons.fire.FireListener;
 import com.fooweapons.fire.FireService;
 import com.fooweapons.hud.HudService;
@@ -31,10 +32,13 @@ public final class FooWeaponsPlugin extends JavaPlugin {
             getServer().getPluginManager().disablePlugin(this);
             return;
         }
-        this.reloadListener = new ReloadListener(this, weapons, itemFactory, itemState);
+
+        SoundService soundService = new SoundService();
+
+        this.reloadListener = new ReloadListener(this, weapons, itemFactory, itemState, soundService);
         getServer().getPluginManager().registerEvents(reloadListener, this);
 
-        FireService fireService = new FireService(itemState);
+        FireService fireService = new FireService(itemState, soundService);
         getServer().getPluginManager().registerEvents(
             new FireListener(weapons, itemFactory, fireService, reloadListener), this);
 
