@@ -2,6 +2,7 @@ package com.fooweapons;
 
 import com.fooweapons.fire.FireListener;
 import com.fooweapons.fire.FireService;
+import com.fooweapons.hud.HudService;
 import com.fooweapons.item.ItemState;
 import com.fooweapons.item.PdcKeys;
 import com.fooweapons.item.WeaponItemFactory;
@@ -15,6 +16,7 @@ public final class FooWeaponsPlugin extends JavaPlugin {
     private WeaponItemFactory itemFactory;
     private ItemState itemState;
     private ReloadListener reloadListener;
+    private HudService hudService;
 
     @Override
     public void onEnable() {
@@ -35,7 +37,16 @@ public final class FooWeaponsPlugin extends JavaPlugin {
         FireService fireService = new FireService(itemState);
         getServer().getPluginManager().registerEvents(
             new FireListener(weapons, itemFactory, fireService, reloadListener), this);
+
+        this.hudService = new HudService(this, weapons, itemFactory, itemState);
+        hudService.start();
+
         getLogger().info("fooWeapons enabled with " + weapons.size() + " weapon(s).");
+    }
+
+    @Override
+    public void onDisable() {
+        if (hudService != null) hudService.stop();
     }
 
     public WeaponRegistry weapons() { return weapons; }
