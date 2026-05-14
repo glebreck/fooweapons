@@ -11,12 +11,11 @@ public final class FooWeaponsPlugin extends JavaPlugin {
         try {
             weapons.loadFromClasspath(getClassLoader(), "weapons/pistol_01.yml");
             getLogger().info("Loaded " + weapons.size() + " weapon(s).");
+            getLogger().info("fooWeapons enabled.");
         } catch (Exception e) {
             getLogger().severe("Failed to load weapons: " + e.getMessage());
             getServer().getPluginManager().disablePlugin(this);
-            return;
         }
-        getLogger().info("fooWeapons enabled.");
     }
 
     public WeaponRegistry weapons() {

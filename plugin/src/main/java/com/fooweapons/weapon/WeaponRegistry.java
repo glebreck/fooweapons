@@ -11,13 +11,15 @@ public final class WeaponRegistry {
     private final WeaponLoader loader = new WeaponLoader();
 
     public void loadFromClasspath(ClassLoader cl, String... resourcePaths) throws IOException {
+        Map<String, Weapon> loaded = new HashMap<>();
         for (String path : resourcePaths) {
             try (InputStream in = cl.getResourceAsStream(path)) {
                 if (in == null) throw new IOException("Resource not found: " + path);
                 Weapon w = loader.load(in);
-                byId.put(w.id(), w);
+                loaded.put(w.id(), w);
             }
         }
+        byId.putAll(loaded);
     }
 
     public Optional<Weapon> get(String id) {
