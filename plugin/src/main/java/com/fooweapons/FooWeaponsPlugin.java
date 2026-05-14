@@ -5,6 +5,7 @@ import com.fooweapons.fire.FireService;
 import com.fooweapons.item.ItemState;
 import com.fooweapons.item.PdcKeys;
 import com.fooweapons.item.WeaponItemFactory;
+import com.fooweapons.reload.ReloadListener;
 import com.fooweapons.weapon.WeaponRegistry;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -13,6 +14,7 @@ public final class FooWeaponsPlugin extends JavaPlugin {
     private PdcKeys pdcKeys;
     private WeaponItemFactory itemFactory;
     private ItemState itemState;
+    private ReloadListener reloadListener;
 
     @Override
     public void onEnable() {
@@ -27,13 +29,17 @@ public final class FooWeaponsPlugin extends JavaPlugin {
             getServer().getPluginManager().disablePlugin(this);
             return;
         }
+        this.reloadListener = new ReloadListener(this, weapons, itemFactory, itemState);
+        getServer().getPluginManager().registerEvents(reloadListener, this);
+
         FireService fireService = new FireService(itemState);
         getServer().getPluginManager().registerEvents(
-            new FireListener(weapons, itemFactory, fireService), this);
+            new FireListener(weapons, itemFactory, fireService, reloadListener), this);
         getLogger().info("fooWeapons enabled with " + weapons.size() + " weapon(s).");
     }
 
     public WeaponRegistry weapons() { return weapons; }
     public WeaponItemFactory itemFactory() { return itemFactory; }
     public ItemState itemState() { return itemState; }
+    public ReloadListener reloadListener() { return reloadListener; }
 }

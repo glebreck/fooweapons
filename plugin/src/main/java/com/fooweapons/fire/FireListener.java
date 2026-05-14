@@ -1,6 +1,7 @@
 package com.fooweapons.fire;
 
 import com.fooweapons.item.WeaponItemFactory;
+import com.fooweapons.reload.ReloadListener;
 import com.fooweapons.weapon.Weapon;
 import com.fooweapons.weapon.WeaponRegistry;
 import org.bukkit.entity.Player;
@@ -15,11 +16,14 @@ public final class FireListener implements Listener {
     private final WeaponRegistry registry;
     private final WeaponItemFactory factory;
     private final FireService fireService;
+    private final ReloadListener reloadListener;
 
-    public FireListener(WeaponRegistry registry, WeaponItemFactory factory, FireService fireService) {
+    public FireListener(WeaponRegistry registry, WeaponItemFactory factory,
+                        FireService fireService, ReloadListener reloadListener) {
         this.registry = registry;
         this.factory = factory;
         this.fireService = fireService;
+        this.reloadListener = reloadListener;
     }
 
     @EventHandler
@@ -27,6 +31,7 @@ public final class FireListener implements Listener {
         if (event.getAction() != Action.LEFT_CLICK_AIR && event.getAction() != Action.LEFT_CLICK_BLOCK) return;
         if (event.getHand() != null && event.getHand() != org.bukkit.inventory.EquipmentSlot.HAND) return;
         Player player = event.getPlayer();
+        if (reloadListener.isReloading(player.getUniqueId())) return;
         ItemStack stack = player.getInventory().getItemInMainHand();
         if (!factory.isWeapon(stack)) return;
         event.setCancelled(true);
