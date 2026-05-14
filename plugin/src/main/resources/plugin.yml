@@ -1,0 +1,10 @@
+name: fooWeapons
+version: '${version}'
+main: com.fooweapons.FooWeaponsPlugin
+api-version: '1.21'
+commands:
+  fooweapons:
+    description: fooWeapons admin commands
+    usage: /<command> give <weapon_id>
+    aliases: [foo]
+    permission: fooweapons.admin
