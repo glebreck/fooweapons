@@ -1,5 +1,6 @@
 package com.fooweapons;
 
+import com.fooweapons.command.GiveCommand;
 import com.fooweapons.feedback.SoundService;
 import com.fooweapons.fire.FireListener;
 import com.fooweapons.fire.FireService;
@@ -44,6 +45,8 @@ public final class FooWeaponsPlugin extends JavaPlugin {
 
         this.hudService = new HudService(this, weapons, itemFactory, itemState);
         hudService.start();
+
+        getCommand("fooweapons").setExecutor(new GiveCommand(weapons, itemFactory));
 
         getLogger().info("fooWeapons enabled with " + weapons.size() + " weapon(s).");
     }
