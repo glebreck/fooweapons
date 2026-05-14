@@ -35,9 +35,18 @@ class WeaponLoaderTest {
         assertEquals("Pistol", w.displayName());
         assertEquals(1001, w.customModelData());
         assertEquals(4.0, w.damage());
+        assertEquals(2.0, w.headshotMultiplier());
+        assertEquals(50.0, w.range());
+        assertEquals(25.0, w.falloffStart());
+        assertEquals(50.0, w.falloffEnd());
+        assertEquals(1.0, w.baseSpreadDegrees());
+        assertEquals(1.5, w.movingSpreadPenaltyDegrees());
+        assertEquals(4, w.fireRatePerSecond());
         assertEquals(12, w.magSize());
         assertEquals(36, w.reloadTimeTicks());
         assertEquals("minecraft:entity.firework_rocket.blast", w.fireSoundId());
+        assertEquals("minecraft:item.crossbow.loading_middle", w.reloadSoundId());
+        assertEquals("minecraft:block.dispenser.fail", w.dryFireSoundId());
     }
 
     @Test

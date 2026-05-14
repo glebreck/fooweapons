@@ -3,12 +3,11 @@ package com.fooweapons.weapon;
 import org.yaml.snakeyaml.Yaml;
 import java.io.InputStream;
 import java.util.Map;
-import java.util.Objects;
 
 public final class WeaponLoader {
-    private final Yaml yaml = new Yaml();
 
     public Weapon load(InputStream input) {
+        Yaml yaml = new Yaml();
         Map<String, Object> root = yaml.load(input);
         if (root == null) throw new IllegalArgumentException("Empty YAML");
         String id = req(root, "id");
@@ -47,7 +46,6 @@ public final class WeaponLoader {
     }
 
     private static Number num(Map<String, Object> map, String key) {
-        return Objects.requireNonNull((Number) map.get(key),
-            () -> "Missing numeric field: " + key);
+        return (Number) req(map, key);
     }
 }
