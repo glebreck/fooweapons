@@ -1,0 +1,19 @@
+id: pistol_01
+display_name: "Pistol"
+custom_model_data: 1001
+fire:
+  damage: 4.0
+  headshot_multiplier: 2.0
+  range: 50.0
+  falloff_start: 25.0
+  falloff_end: 50.0
+  rate_per_second: 4
+  base_spread_degrees: 1.0
+  moving_spread_penalty_degrees: 1.5
+mag:
+  size: 12
+  reload_time_ticks: 36
+sounds:
+  fire: "minecraft:entity.firework_rocket.blast"
+  reload: "minecraft:item.crossbow.loading_middle"
+  dry_fire: "minecraft:block.dispenser.fail"
