@@ -13,7 +13,7 @@ public final class Hitscan {
     public static Hit fire(Player shooter, Vector direction, double range) {
         Location eye = shooter.getEyeLocation();
         RayTraceResult result = shooter.getWorld().rayTrace(
-            eye, direction.normalize(), range,
+            eye, direction.clone().normalize(), range,
             org.bukkit.FluidCollisionMode.NEVER, true, 0.0,
             e -> e instanceof LivingEntity && !e.equals(shooter)
         );
