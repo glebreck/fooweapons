@@ -1,6 +1,0 @@
-name: nf_fooWeapons
-version: '${version}'
-main: com.fooweapons.FooWeaponsPlugin
-api-version: '1.21'
-authors: [fooWeapons-dev]
-description: Modern firearms plugin for Paper 1.21.11
