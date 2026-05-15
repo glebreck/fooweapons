@@ -5,6 +5,7 @@ import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
+import java.util.Set;
 
 public final class WeaponRegistry {
     private final Map<String, Weapon> byId = new HashMap<>();
@@ -24,6 +25,10 @@ public final class WeaponRegistry {
 
     public Optional<Weapon> get(String id) {
         return Optional.ofNullable(byId.get(id));
+    }
+
+    public Set<String> ids() {
+        return Set.copyOf(byId.keySet());
     }
 
     public int size() {

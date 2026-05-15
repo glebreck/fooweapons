@@ -46,7 +46,9 @@ public final class FooWeaponsPlugin extends JavaPlugin {
         this.hudService = new HudService(this, weapons, itemFactory, itemState);
         hudService.start();
 
-        getCommand("fooweapons").setExecutor(new GiveCommand(weapons, itemFactory));
+        GiveCommand giveCommand = new GiveCommand(weapons, itemFactory);
+        getCommand("fooweapons").setExecutor(giveCommand);
+        getCommand("fooweapons").setTabCompleter(giveCommand);
 
         getLogger().info("fooWeapons enabled with " + weapons.size() + " weapon(s).");
     }

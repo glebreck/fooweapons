@@ -35,6 +35,10 @@ public final class HudService {
         if (task != null) task.cancel();
     }
 
+    private static final int BAR_SEGMENTS = 10;
+    private static final String FILLED_CHAR = "█";
+    private static final String EMPTY_CHAR = "░";
+
     private void tick() {
         for (Player player : Bukkit.getOnlinePlayers()) {
             ItemStack stack = player.getInventory().getItemInMainHand();
@@ -42,9 +46,23 @@ public final class HudService {
             Weapon w = registry.get(factory.getWeaponId(stack)).orElse(null);
             if (w == null) continue;
             int ammo = state.getAmmo(stack);
-            player.sendActionBar(Component.text(w.displayName() + "  ", NamedTextColor.GRAY)
-                .append(Component.text(ammo + "/" + w.magSize(),
-                    ammo == 0 ? NamedTextColor.RED : NamedTextColor.WHITE)));
+            int mag = w.magSize();
+            int filled = (int) Math.round((double) ammo / mag * BAR_SEGMENTS);
+            double ratio = (double) ammo / mag;
+            NamedTextColor countColor =
+                ammo == 0 ? NamedTextColor.RED :
+                ratio <= 0.25 ? NamedTextColor.GOLD :
+                NamedTextColor.WHITE;
+
+            Component line = Component.text(w.displayName(), NamedTextColor.GRAY)
+                .append(Component.text("  "))
+                .append(Component.text(FILLED_CHAR.repeat(filled), NamedTextColor.GOLD))
+                .append(Component.text(EMPTY_CHAR.repeat(BAR_SEGMENTS - filled), NamedTextColor.DARK_GRAY))
+                .append(Component.text("  "))
+                .append(Component.text(ammo + "/" + mag, countColor))
+                .append(Component.text("  "))
+                .append(Component.text("SEMI", NamedTextColor.AQUA));
+            player.sendActionBar(line);
         }
     }
 }
