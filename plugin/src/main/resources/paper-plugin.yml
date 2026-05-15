@@ -1,4 +1,4 @@
-name: fooWeapons
+name: nf_fooWeapons
 version: '${version}'
 main: com.fooweapons.FooWeaponsPlugin
 api-version: '1.21'

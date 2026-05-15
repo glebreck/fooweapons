@@ -22,7 +22,7 @@ tasks.register<Zip>("packageResourcePack") {
 tasks.register("dist") {
     dependsOn(":plugin:jar", "packageResourcePack")
     doLast {
-        println("Plugin JAR: " + project(":plugin").layout.buildDirectory.file("libs/plugin-${project.version}.jar").get())
+        println("Plugin JAR: " + project(":plugin").layout.buildDirectory.file("libs/nf_fooweapons-${project.version}.jar").get())
         println("Resource pack: " + layout.buildDirectory.file("dist/fooWeapons-resourcepack-${project.version}.zip").get())
     }
 }

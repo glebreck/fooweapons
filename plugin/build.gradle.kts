@@ -17,6 +17,10 @@ dependencies {
     testImplementation("com.github.seeseemelk:MockBukkit-v1.21:3.133.2")
 }
 
+tasks.jar {
+    archiveBaseName.set("nf_fooweapons")
+}
+
 tasks.test {
     useJUnitPlatform()
 }
