@@ -48,12 +48,16 @@ Smoke-test verified on Greg's GPortal Paper 1.21.11 server with a vanilla 1.21.1
 
 Smoke-test verified on Greg's GPortal Paper 1.21.11 server. Fire-mode toggle key was iterated from Sneak+Q (spec) to single-key Q (released) during beta testing.
 
+### Plan 2 Slice B — SMG + shotgun + muzzle flash (in `dev`, pending smoke test)
+
+Adds `smg_01`, `shotgun_01` (with per-pellet hitscan and per-target damage aggregation), and server-side muzzle-flash particles on every weapon. Introduces `FireMode.PUMP`.
+
 ### New weapons
-- [ ] SMG (`smg_01`) — full-auto, 30 rounds
+- [x] SMG (`smg_01`) — full-auto, 30 rounds
 - [x] Assault rifle (`rifle_01`) — selectable semi/auto, 30 rounds
 - [ ] Battle rifle (`battle_rifle_01`) — semi-auto, 20 rounds, higher damage
 - [ ] Bolt-action sniper (`sniper_01`) — bolt, 5 rounds, high damage
-- [ ] Pump shotgun (`shotgun_01`) — pump, 6 shells, pellet spread
+- [x] Pump shotgun (`shotgun_01`) — pump, 6 shells, pellet spread
 
 ### Combat mechanics
 - [x] Automatic fire (continuous-fire polling while LMB held)
@@ -61,7 +65,7 @@ Smoke-test verified on Greg's GPortal Paper 1.21.11 server. Fire-mode toggle key
 - [ ] Aim down sights (ADS) — hold right-click, movement-speed modifier, tighter spread
 - [ ] Recoil — view kick on fire, recover over a few ticks
 - [ ] Consumable magazines — reload pulls a magazine item from inventory (currently free)
-- [ ] Muzzle-flash particles
+- [x] Muzzle-flash particles
 
 ### Configuration
 - [ ] Global `config.yml` — friendly fire toggle, world allowlist, damage multipliers

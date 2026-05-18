@@ -46,7 +46,9 @@ public final class WeaponLoader {
             req(sounds, "reload"),
             req(sounds, "dry_fire"),
             modes,
-            defaultMode
+            defaultMode,
+            parsePelletsPerShot(fire),
+            parseMuzzleFlash(root)
         );
     }
 
@@ -74,5 +76,44 @@ public final class WeaponLoader {
 
     private static Number num(Map<String, Object> map, String key) {
         return (Number) req(map, key);
+    }
+
+    private static int parsePelletsPerShot(Map<String, Object> fire) {
+        Object raw = fire.get("pellets_per_shot");
+        if (raw == null) return 1;
+        int n = ((Number) raw).intValue();
+        if (n < 1 || n > 16) {
+            throw new IllegalArgumentException(
+                "pellets_per_shot must be between 1 and 16, got " + n);
+        }
+        return n;
+    }
+
+    @SuppressWarnings("unchecked")
+    private static MuzzleFlashConfig parseMuzzleFlash(Map<String, Object> root) {
+        Object feedbackRaw = root.get("feedback");
+        if (!(feedbackRaw instanceof Map<?, ?>)) return MuzzleFlashConfig.defaults();
+        Object mfRaw = ((Map<String, Object>) feedbackRaw).get("muzzle_flash");
+        if (!(mfRaw instanceof Map<?, ?>)) return MuzzleFlashConfig.defaults();
+        Map<String, Object> mf = (Map<String, Object>) mfRaw;
+        MuzzleFlashConfig d = MuzzleFlashConfig.defaults();
+
+        int flame = mf.containsKey("flame_count")
+            ? ((Number) mf.get("flame_count")).intValue() : d.flameCount();
+        int smoke = mf.containsKey("smoke_count")
+            ? ((Number) mf.get("smoke_count")).intValue() : d.smokeCount();
+        double offset = mf.containsKey("forward_offset")
+            ? ((Number) mf.get("forward_offset")).doubleValue() : d.forwardOffset();
+
+        if (flame < 0 || flame > 32) {
+            throw new IllegalArgumentException("flame_count must be 0-32, got " + flame);
+        }
+        if (smoke < 0 || smoke > 32) {
+            throw new IllegalArgumentException("smoke_count must be 0-32, got " + smoke);
+        }
+        if (offset < 0.0 || offset > 4.0) {
+            throw new IllegalArgumentException("forward_offset must be 0.0-4.0, got " + offset);
+        }
+        return new MuzzleFlashConfig(flame, smoke, offset);
     }
 }

@@ -1,0 +1,27 @@
+id: shotgun_01
+display_name: "Pump Shotgun"
+custom_model_data: 1006
+fire:
+  modes: [pump]
+  default_mode: pump
+  pellets_per_shot: 8
+  damage: 4.0
+  headshot_multiplier: 1.5
+  range: 30.0
+  falloff_start: 8.0
+  falloff_end: 20.0
+  rate_per_second: 1
+  base_spread_degrees: 6.0
+  moving_spread_penalty_degrees: 2.0
+mag:
+  size: 6
+  reload_time_ticks: 80
+feedback:
+  muzzle_flash:
+    flame_count: 8
+    smoke_count: 4
+    forward_offset: 1.8
+sounds:
+  fire: "minecraft:entity.firework_rocket.blast"
+  reload: "minecraft:item.crossbow.loading_middle"
+  dry_fire: "minecraft:block.dispenser.fail"
