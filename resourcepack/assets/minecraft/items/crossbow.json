@@ -11,6 +11,13 @@
         }
       },
       {
+        "when": "1002",
+        "model": {
+          "type": "minecraft:model",
+          "model": "fooweapons:item/smg_01"
+        }
+      },
+      {
         "when": "1003",
         "model": {
           "type": "minecraft:model",
