@@ -139,4 +139,69 @@ class WeaponLoaderTest {
             "rate_per_second: 4\n  pellets_per_shot: 17");
         assertThrows(IllegalArgumentException.class, () -> load(yaml));
     }
+
+    @Test
+    void parsesFullMuzzleFlashBlock() {
+        String yaml = FULL_YAML + """
+            feedback:
+              muzzle_flash:
+                flame_count: 8
+                smoke_count: 4
+                forward_offset: 1.8
+            """;
+        Weapon w = load(yaml);
+        assertEquals(new MuzzleFlashConfig(8, 4, 1.8), w.muzzleFlash());
+    }
+
+    @Test
+    void parsesPartialMuzzleFlashBlock() {
+        String yaml = FULL_YAML + """
+            feedback:
+              muzzle_flash:
+                flame_count: 10
+            """;
+        Weapon w = load(yaml);
+        // Provided field used; missing fields take defaults.
+        assertEquals(new MuzzleFlashConfig(10, 2, 1.5), w.muzzleFlash());
+    }
+
+    @Test
+    void rejectsNegativeFlameCount() {
+        String yaml = FULL_YAML + """
+            feedback:
+              muzzle_flash:
+                flame_count: -1
+            """;
+        assertThrows(IllegalArgumentException.class, () -> load(yaml));
+    }
+
+    @Test
+    void rejectsExcessiveSmokeCount() {
+        String yaml = FULL_YAML + """
+            feedback:
+              muzzle_flash:
+                smoke_count: 33
+            """;
+        assertThrows(IllegalArgumentException.class, () -> load(yaml));
+    }
+
+    @Test
+    void rejectsExcessiveForwardOffset() {
+        String yaml = FULL_YAML + """
+            feedback:
+              muzzle_flash:
+                forward_offset: 4.5
+            """;
+        assertThrows(IllegalArgumentException.class, () -> load(yaml));
+    }
+
+    @Test
+    void rejectsNegativeForwardOffset() {
+        String yaml = FULL_YAML + """
+            feedback:
+              muzzle_flash:
+                forward_offset: -0.1
+            """;
+        assertThrows(IllegalArgumentException.class, () -> load(yaml));
+    }
 }
