@@ -41,7 +41,7 @@ public final class FooWeaponsPlugin extends JavaPlugin {
 
         FireService fireService = new FireService(itemState, soundService);
         getServer().getPluginManager().registerEvents(
-            new FireListener(weapons, itemFactory, fireService, reloadListener), this);
+            new FireListener(weapons, itemFactory, fireService, reloadListener, itemState), this);
 
         this.hudService = new HudService(this, weapons, itemFactory, itemState);
         hudService.start();
