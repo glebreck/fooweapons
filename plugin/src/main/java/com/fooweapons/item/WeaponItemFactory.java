@@ -23,6 +23,7 @@ public final class WeaponItemFactory {
         pdc.set(keys.weaponId, keys.stringType(), weapon.id());
         pdc.set(keys.ammo, keys.intType(), weapon.magSize());
         pdc.set(keys.lastFiredMs, keys.longType(), 0L);
+        pdc.set(keys.fireMode, keys.stringType(), weapon.defaultMode().yamlName());
         stack.setItemMeta(meta);
         return stack;
     }

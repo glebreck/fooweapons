@@ -1,5 +1,8 @@
 package com.fooweapons.weapon;
 
+import com.fooweapons.fire.mode.FireMode;
+import java.util.List;
+
 public record Weapon(
     String id,
     String displayName,
@@ -16,7 +19,9 @@ public record Weapon(
     int reloadTimeTicks,
     String fireSoundId,
     String reloadSoundId,
-    String dryFireSoundId
+    String dryFireSoundId,
+    List<FireMode> modes,
+    FireMode defaultMode
 ) {
     public long fireCooldownMillis() {
         return 1000L / Math.max(1, fireRatePerSecond);

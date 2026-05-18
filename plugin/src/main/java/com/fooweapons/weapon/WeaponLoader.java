@@ -1,7 +1,10 @@
 package com.fooweapons.weapon;
 
+import com.fooweapons.fire.mode.FireMode;
 import org.yaml.snakeyaml.Yaml;
 import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 public final class WeaponLoader {
@@ -17,6 +20,13 @@ public final class WeaponLoader {
         Map<String, Object> fire = req(root, "fire");
         Map<String, Object> mag = req(root, "mag");
         Map<String, Object> sounds = req(root, "sounds");
+
+        List<FireMode> modes = parseModes(req(fire, "modes"));
+        FireMode defaultMode = FireMode.fromYamlName(req(fire, "default_mode"));
+        if (!modes.contains(defaultMode)) {
+            throw new IllegalArgumentException(
+                "default_mode " + defaultMode.yamlName() + " is not in modes list " + modes);
+        }
 
         return new Weapon(
             id,
@@ -34,8 +44,25 @@ public final class WeaponLoader {
             num(mag, "reload_time_ticks").intValue(),
             req(sounds, "fire"),
             req(sounds, "reload"),
-            req(sounds, "dry_fire")
+            req(sounds, "dry_fire"),
+            modes,
+            defaultMode
         );
+    }
+
+    @SuppressWarnings("unchecked")
+    private static List<FireMode> parseModes(Object raw) {
+        if (!(raw instanceof List<?> rawList)) {
+            throw new IllegalArgumentException("modes must be a YAML list");
+        }
+        if (rawList.isEmpty()) {
+            throw new IllegalArgumentException("modes must not be empty");
+        }
+        List<FireMode> out = new ArrayList<>();
+        for (Object o : rawList) {
+            out.add(FireMode.fromYamlName(String.valueOf(o)));
+        }
+        return List.copyOf(out);
     }
 
     @SuppressWarnings("unchecked")

@@ -2,6 +2,8 @@ id: pistol_01
 display_name: "Pistol"
 custom_model_data: 1001
 fire:
+  modes: [semi]
+  default_mode: semi
   damage: 4.0
   headshot_multiplier: 2.0
   range: 50.0
