@@ -58,6 +58,8 @@ class WeaponLoaderTest {
         assertEquals("minecraft:block.dispenser.fail", w.dryFireSoundId());
         assertEquals(List.of(FireMode.SEMI), w.modes());
         assertEquals(FireMode.SEMI, w.defaultMode());
+        assertEquals(1, w.pelletsPerShot());
+        assertEquals(MuzzleFlashConfig.defaults(), w.muzzleFlash());
     }
 
     @Test
@@ -102,6 +104,104 @@ class WeaponLoaderTest {
     @Test
     void throwsOnUnknownModeName() {
         String yaml = FULL_YAML.replace("modes: [semi]", "modes: [bogus]");
+        assertThrows(IllegalArgumentException.class, () -> load(yaml));
+    }
+
+    @Test
+    void parsesPelletsPerShot() {
+        String yaml = FULL_YAML.replace(
+            "rate_per_second: 4",
+            "rate_per_second: 4\n  pellets_per_shot: 8");
+        Weapon w = load(yaml);
+        assertEquals(8, w.pelletsPerShot());
+    }
+
+    @Test
+    void rejectsZeroPellets() {
+        String yaml = FULL_YAML.replace(
+            "rate_per_second: 4",
+            "rate_per_second: 4\n  pellets_per_shot: 0");
+        assertThrows(IllegalArgumentException.class, () -> load(yaml));
+    }
+
+    @Test
+    void rejectsNegativePellets() {
+        String yaml = FULL_YAML.replace(
+            "rate_per_second: 4",
+            "rate_per_second: 4\n  pellets_per_shot: -1");
+        assertThrows(IllegalArgumentException.class, () -> load(yaml));
+    }
+
+    @Test
+    void rejectsExcessivePellets() {
+        String yaml = FULL_YAML.replace(
+            "rate_per_second: 4",
+            "rate_per_second: 4\n  pellets_per_shot: 17");
+        assertThrows(IllegalArgumentException.class, () -> load(yaml));
+    }
+
+    @Test
+    void parsesFullMuzzleFlashBlock() {
+        String yaml = FULL_YAML + """
+            feedback:
+              muzzle_flash:
+                flame_count: 8
+                smoke_count: 4
+                forward_offset: 1.8
+            """;
+        Weapon w = load(yaml);
+        assertEquals(new MuzzleFlashConfig(8, 4, 1.8), w.muzzleFlash());
+    }
+
+    @Test
+    void parsesPartialMuzzleFlashBlock() {
+        String yaml = FULL_YAML + """
+            feedback:
+              muzzle_flash:
+                flame_count: 10
+            """;
+        Weapon w = load(yaml);
+        // Provided field used; missing fields take defaults.
+        assertEquals(new MuzzleFlashConfig(10, 2, 1.5), w.muzzleFlash());
+    }
+
+    @Test
+    void rejectsNegativeFlameCount() {
+        String yaml = FULL_YAML + """
+            feedback:
+              muzzle_flash:
+                flame_count: -1
+            """;
+        assertThrows(IllegalArgumentException.class, () -> load(yaml));
+    }
+
+    @Test
+    void rejectsExcessiveSmokeCount() {
+        String yaml = FULL_YAML + """
+            feedback:
+              muzzle_flash:
+                smoke_count: 33
+            """;
+        assertThrows(IllegalArgumentException.class, () -> load(yaml));
+    }
+
+    @Test
+    void rejectsExcessiveForwardOffset() {
+        String yaml = FULL_YAML + """
+            feedback:
+              muzzle_flash:
+                forward_offset: 4.5
+            """;
+        assertThrows(IllegalArgumentException.class, () -> load(yaml));
+    }
+
+    @Test
+    void rejectsNegativeForwardOffset() {
+        String yaml = FULL_YAML + """
+            feedback:
+              muzzle_flash:
+                forward_offset: -0.1
+            """;
         assertThrows(IllegalArgumentException.class, () -> load(yaml));
     }
 }

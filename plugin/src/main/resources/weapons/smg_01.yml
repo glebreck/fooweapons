@@ -1,0 +1,21 @@
+id: smg_01
+display_name: "SMG"
+custom_model_data: 1002
+fire:
+  modes: [auto]
+  default_mode: auto
+  damage: 3.5
+  headshot_multiplier: 1.8
+  range: 60.0
+  falloff_start: 25.0
+  falloff_end: 55.0
+  rate_per_second: 15
+  base_spread_degrees: 2.5
+  moving_spread_penalty_degrees: 3.0
+mag:
+  size: 30
+  reload_time_ticks: 60
+sounds:
+  fire: "minecraft:entity.firework_rocket.blast"
+  reload: "minecraft:item.crossbow.loading_middle"
+  dry_fire: "minecraft:block.dispenser.fail"

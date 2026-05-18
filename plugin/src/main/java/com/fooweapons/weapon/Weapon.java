@@ -21,7 +21,9 @@ public record Weapon(
     String reloadSoundId,
     String dryFireSoundId,
     List<FireMode> modes,
-    FireMode defaultMode
+    FireMode defaultMode,
+    int pelletsPerShot,
+    MuzzleFlashConfig muzzleFlash
 ) {
     public long fireCooldownMillis() {
         return 1000L / Math.max(1, fireRatePerSecond);

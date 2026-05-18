@@ -2,7 +2,8 @@ package com.fooweapons.fire.mode;
 
 public enum FireMode {
     SEMI("SEMI", "semi"),
-    AUTO("AUTO", "auto");
+    AUTO("AUTO", "auto"),
+    PUMP("PUMP", "pump");
 
     private final String label;
     private final String yamlName;
