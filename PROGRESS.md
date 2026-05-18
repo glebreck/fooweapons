@@ -44,9 +44,9 @@ Smoke-test verified on Greg's GPortal Paper 1.21.11 server with a vanilla 1.21.1
 
 ## Plan 2 — In Progress
 
-### Plan 2 Slice A — Auto-fire + fire-mode toggle + rifle_01 (shipped 2026-05-18)
+### Plan 2 Slice A — Auto-fire + fire-mode toggle + rifle_01 (shipped to release as v0.2.0, 2026-05-18)
 
-Smoke test pending on Greg's GPortal Paper 1.21.11 server.
+Smoke-test verified on Greg's GPortal Paper 1.21.11 server. Fire-mode toggle key was iterated from Sneak+Q (spec) to single-key Q (released) during beta testing.
 
 ### New weapons
 - [ ] SMG (`smg_01`) — full-auto, 30 rounds
