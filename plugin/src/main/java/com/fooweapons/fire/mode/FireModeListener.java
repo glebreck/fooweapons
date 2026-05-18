@@ -29,18 +29,14 @@ public final class FireModeListener implements Listener {
     @EventHandler
     public void onDrop(PlayerDropItemEvent event) {
         Player player = event.getPlayer();
-        if (!player.isSneaking()) return;
         ItemStack stack = event.getItemDrop().getItemStack();
         if (!factory.isWeapon(stack)) return;
         Optional<Weapon> w = registry.get(factory.getWeaponId(stack));
         if (w.isEmpty()) return;
-        event.setCancelled(true);
-
         Weapon weapon = w.get();
-        if (weapon.modes().size() <= 1) {
-            sounds.playDeniedClick(player);
-            return;
-        }
+        if (weapon.modes().size() <= 1) return;
+
+        event.setCancelled(true);
         FireMode current = state.getFireMode(stack, weapon.defaultMode());
         FireMode next = FireModeCycle.next(current, weapon.modes());
         state.setFireMode(stack, next);
