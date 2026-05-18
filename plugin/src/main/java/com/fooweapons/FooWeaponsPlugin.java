@@ -1,6 +1,7 @@
 package com.fooweapons;
 
 import com.fooweapons.command.GiveCommand;
+import com.fooweapons.feedback.MuzzleFlashService;
 import com.fooweapons.feedback.SoundService;
 import com.fooweapons.fire.FireListener;
 import com.fooweapons.fire.FireService;
@@ -38,11 +39,12 @@ public final class FooWeaponsPlugin extends JavaPlugin {
         }
 
         SoundService soundService = new SoundService();
+        MuzzleFlashService muzzleFlashService = new MuzzleFlashService();
 
         this.reloadListener = new ReloadListener(this, weapons, itemFactory, itemState, soundService);
         getServer().getPluginManager().registerEvents(reloadListener, this);
 
-        FireService fireService = new FireService(itemState, soundService);
+        FireService fireService = new FireService(itemState, soundService, muzzleFlashService);
         getServer().getPluginManager().registerEvents(
             new FireListener(weapons, itemFactory, fireService, reloadListener, itemState), this);
 
