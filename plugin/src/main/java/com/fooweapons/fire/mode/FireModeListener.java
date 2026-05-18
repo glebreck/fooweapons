@@ -30,7 +30,7 @@ public final class FireModeListener implements Listener {
     public void onDrop(PlayerDropItemEvent event) {
         Player player = event.getPlayer();
         if (!player.isSneaking()) return;
-        ItemStack stack = player.getInventory().getItemInMainHand();
+        ItemStack stack = event.getItemDrop().getItemStack();
         if (!factory.isWeapon(stack)) return;
         Optional<Weapon> w = registry.get(factory.getWeaponId(stack));
         if (w.isEmpty()) return;
