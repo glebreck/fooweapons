@@ -23,6 +23,13 @@
           "type": "minecraft:model",
           "model": "fooweapons:item/rifle_01"
         }
+      },
+      {
+        "when": "1006",
+        "model": {
+          "type": "minecraft:model",
+          "model": "fooweapons:item/shotgun_01"
+        }
       }
     ],
     "fallback": {
