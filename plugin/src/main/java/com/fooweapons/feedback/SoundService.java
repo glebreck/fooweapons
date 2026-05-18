@@ -17,6 +17,10 @@ public final class SoundService {
         play(player, soundId, 0.5f, 1.2f);
     }
 
+    public void playClick(Player player) {
+        play(player, "minecraft:ui.button.click", 0.6f, 1.4f);
+    }
+
     private void play(Player player, String soundId, float volume, float pitch) {
         Location loc = player.getLocation();
         player.getWorld().playSound(loc, soundId, SoundCategory.PLAYERS, volume, pitch);

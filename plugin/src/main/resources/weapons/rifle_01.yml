@@ -1,0 +1,21 @@
+id: rifle_01
+display_name: "Assault Rifle"
+custom_model_data: 1003
+fire:
+  modes: [semi, auto]
+  default_mode: semi
+  damage: 5.5
+  headshot_multiplier: 2.0
+  range: 80.0
+  falloff_start: 40.0
+  falloff_end: 80.0
+  rate_per_second: 10
+  base_spread_degrees: 1.5
+  moving_spread_penalty_degrees: 2.0
+mag:
+  size: 30
+  reload_time_ticks: 50
+sounds:
+  fire: "minecraft:entity.firework_rocket.blast"
+  reload: "minecraft:item.crossbow.loading_middle"
+  dry_fire: "minecraft:block.dispenser.fail"

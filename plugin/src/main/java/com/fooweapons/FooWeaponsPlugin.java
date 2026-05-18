@@ -19,6 +19,7 @@ public final class FooWeaponsPlugin extends JavaPlugin {
     private ItemState itemState;
     private ReloadListener reloadListener;
     private HudService hudService;
+    private com.fooweapons.fire.auto.AutoFireTracker autoFireTracker;
 
     @Override
     public void onEnable() {
@@ -27,7 +28,9 @@ public final class FooWeaponsPlugin extends JavaPlugin {
         this.itemState = new ItemState(pdcKeys);
         this.weapons = new WeaponRegistry();
         try {
-            weapons.loadFromClasspath(getClassLoader(), "weapons/pistol_01.yml");
+            weapons.loadFromClasspath(getClassLoader(),
+                "weapons/pistol_01.yml",
+                "weapons/rifle_01.yml");
         } catch (Exception e) {
             getLogger().severe("Failed to load weapons: " + e.getMessage());
             getServer().getPluginManager().disablePlugin(this);
@@ -41,7 +44,16 @@ public final class FooWeaponsPlugin extends JavaPlugin {
 
         FireService fireService = new FireService(itemState, soundService);
         getServer().getPluginManager().registerEvents(
-            new FireListener(weapons, itemFactory, fireService, reloadListener), this);
+            new FireListener(weapons, itemFactory, fireService, reloadListener, itemState), this);
+
+        getServer().getPluginManager().registerEvents(
+            new com.fooweapons.fire.mode.FireModeListener(weapons, itemFactory, itemState, soundService), this);
+
+        this.autoFireTracker = new com.fooweapons.fire.auto.AutoFireTracker(
+            this, weapons, itemFactory, itemState, fireService, reloadListener);
+        autoFireTracker.start();
+        getServer().getPluginManager().registerEvents(
+            new com.fooweapons.fire.auto.ArmSwingListener(weapons, itemFactory, itemState, autoFireTracker), this);
 
         this.hudService = new HudService(this, weapons, itemFactory, itemState);
         hudService.start();
@@ -56,6 +68,7 @@ public final class FooWeaponsPlugin extends JavaPlugin {
     @Override
     public void onDisable() {
         if (hudService != null) hudService.stop();
+        if (autoFireTracker != null) autoFireTracker.stop();
     }
 
     public WeaponRegistry weapons() { return weapons; }

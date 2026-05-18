@@ -61,7 +61,9 @@ public final class HudService {
                 .append(Component.text("  "))
                 .append(Component.text(ammo + "/" + mag, countColor))
                 .append(Component.text("  "))
-                .append(Component.text("SEMI", NamedTextColor.AQUA));
+                .append(Component.text(
+                    state.getFireMode(stack, w.defaultMode()).label(),
+                    NamedTextColor.AQUA));
             player.sendActionBar(line);
         }
     }

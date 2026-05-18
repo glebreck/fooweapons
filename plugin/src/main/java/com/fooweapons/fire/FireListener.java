@@ -1,5 +1,7 @@
 package com.fooweapons.fire;
 
+import com.fooweapons.fire.mode.FireMode;
+import com.fooweapons.item.ItemState;
 import com.fooweapons.item.WeaponItemFactory;
 import com.fooweapons.reload.ReloadListener;
 import com.fooweapons.weapon.Weapon;
@@ -17,13 +19,16 @@ public final class FireListener implements Listener {
     private final WeaponItemFactory factory;
     private final FireService fireService;
     private final ReloadListener reloadListener;
+    private final ItemState state;
 
     public FireListener(WeaponRegistry registry, WeaponItemFactory factory,
-                        FireService fireService, ReloadListener reloadListener) {
+                        FireService fireService, ReloadListener reloadListener,
+                        ItemState state) {
         this.registry = registry;
         this.factory = factory;
         this.fireService = fireService;
         this.reloadListener = reloadListener;
+        this.state = state;
     }
 
     @EventHandler
@@ -38,6 +43,8 @@ public final class FireListener implements Listener {
         String id = factory.getWeaponId(stack);
         Optional<Weapon> weapon = registry.get(id);
         if (weapon.isEmpty()) return;
+        // AUTO-mode weapons fire from the arm-swing tracker, not from click events.
+        if (state.getFireMode(stack, weapon.get().defaultMode()) == FireMode.AUTO) return;
         fireService.tryFire(player, stack, weapon.get());
     }
 }
