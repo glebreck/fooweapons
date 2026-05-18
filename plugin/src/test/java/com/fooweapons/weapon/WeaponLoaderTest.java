@@ -58,6 +58,8 @@ class WeaponLoaderTest {
         assertEquals("minecraft:block.dispenser.fail", w.dryFireSoundId());
         assertEquals(List.of(FireMode.SEMI), w.modes());
         assertEquals(FireMode.SEMI, w.defaultMode());
+        assertEquals(1, w.pelletsPerShot());
+        assertEquals(MuzzleFlashConfig.defaults(), w.muzzleFlash());
     }
 
     @Test

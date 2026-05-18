@@ -46,7 +46,9 @@ public final class WeaponLoader {
             req(sounds, "reload"),
             req(sounds, "dry_fire"),
             modes,
-            defaultMode
+            defaultMode,
+            1,
+            MuzzleFlashConfig.defaults()
         );
     }
 
