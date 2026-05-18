@@ -28,7 +28,9 @@ public final class FooWeaponsPlugin extends JavaPlugin {
         this.itemState = new ItemState(pdcKeys);
         this.weapons = new WeaponRegistry();
         try {
-            weapons.loadFromClasspath(getClassLoader(), "weapons/pistol_01.yml");
+            weapons.loadFromClasspath(getClassLoader(),
+                "weapons/pistol_01.yml",
+                "weapons/rifle_01.yml");
         } catch (Exception e) {
             getLogger().severe("Failed to load weapons: " + e.getMessage());
             getServer().getPluginManager().disablePlugin(this);
