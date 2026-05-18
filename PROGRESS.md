@@ -42,20 +42,22 @@ Smoke-test verified on Greg's GPortal Paper 1.21.11 server with a vanilla 1.21.1
 
 ---
 
-## Plan 2 — Deferred (no go yet)
+## Plan 2 — In Progress
 
-Brainstorming → spec → plan not yet written. Triggers when Greg says go.
+### Plan 2 Slice A — Auto-fire + fire-mode toggle + rifle_01 (shipped 2026-05-18)
+
+Smoke test pending on Greg's GPortal Paper 1.21.11 server.
 
 ### New weapons
 - [ ] SMG (`smg_01`) — full-auto, 30 rounds
-- [ ] Assault rifle (`rifle_01`) — selectable semi/auto, 30 rounds
+- [x] Assault rifle (`rifle_01`) — selectable semi/auto, 30 rounds
 - [ ] Battle rifle (`battle_rifle_01`) — semi-auto, 20 rounds, higher damage
 - [ ] Bolt-action sniper (`sniper_01`) — bolt, 5 rounds, high damage
 - [ ] Pump shotgun (`shotgun_01`) — pump, 6 shells, pellet spread
 
 ### Combat mechanics
-- [ ] Automatic fire (continuous-fire polling while LMB held)
-- [ ] Fire mode toggle on rifles (Sneak+Q) — replaces hardcoded `"SEMI"` label in `HudService`
+- [x] Automatic fire (continuous-fire polling while LMB held)
+- [x] Fire mode toggle on rifles (Sneak+Q) — replaces hardcoded `"SEMI"` label in `HudService`
 - [ ] Aim down sights (ADS) — hold right-click, movement-speed modifier, tighter spread
 - [ ] Recoil — view kick on fire, recover over a few ticks
 - [ ] Consumable magazines — reload pulls a magazine item from inventory (currently free)

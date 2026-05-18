@@ -12,7 +12,7 @@ Deployment target: Greg's GPortal-hosted Paper 1.21.11 server.
 - **Server platform:** Paper 1.21.11.
 - **Build:** Gradle (Kotlin DSL); wrapper at `./gradlew` / `.\gradlew.bat`.
 - **Plugin API:** `io.papermc.paper:paper-api:1.21.11-R0.1-SNAPSHOT` (`compileOnly` for main, `testImplementation` for tests).
-- **Test:** JUnit 5 for pure-logic tests; MockBukkit 3.x available for Bukkit-touching tests if needed.
+- **Test:** JUnit 6 for pure-logic tests; MockBukkit 4.x (org.mockbukkit.mockbukkit:mockbukkit-v1.21) for Bukkit-touching tests.
 - **YAML parsing:** SnakeYAML, provided transitively by Paper at runtime and by paper-api/MockBukkit at test runtime.
 
 ## Structure
