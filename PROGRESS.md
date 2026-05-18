@@ -48,7 +48,7 @@ Smoke-test verified on Greg's GPortal Paper 1.21.11 server with a vanilla 1.21.1
 
 Smoke-test verified on Greg's GPortal Paper 1.21.11 server. Fire-mode toggle key was iterated from Sneak+Q (spec) to single-key Q (released) during beta testing.
 
-### Plan 2 Slice B — SMG + shotgun + muzzle flash (smoke-test verified on beta as v0.3.0-beta.1, 2026-05-18)
+### Plan 2 Slice B — SMG + shotgun + muzzle flash (shipped to release as v0.3.0, 2026-05-18)
 
 Adds `smg_01`, `shotgun_01` (with per-pellet hitscan and per-target damage aggregation), and server-side muzzle-flash particles on every weapon. Introduces `FireMode.PUMP`. Smoke-test verified on Greg's GPortal Paper 1.21.11 server.
 
