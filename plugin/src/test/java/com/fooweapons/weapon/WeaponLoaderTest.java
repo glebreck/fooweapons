@@ -106,4 +106,37 @@ class WeaponLoaderTest {
         String yaml = FULL_YAML.replace("modes: [semi]", "modes: [bogus]");
         assertThrows(IllegalArgumentException.class, () -> load(yaml));
     }
+
+    @Test
+    void parsesPelletsPerShot() {
+        String yaml = FULL_YAML.replace(
+            "rate_per_second: 4",
+            "rate_per_second: 4\n  pellets_per_shot: 8");
+        Weapon w = load(yaml);
+        assertEquals(8, w.pelletsPerShot());
+    }
+
+    @Test
+    void rejectsZeroPellets() {
+        String yaml = FULL_YAML.replace(
+            "rate_per_second: 4",
+            "rate_per_second: 4\n  pellets_per_shot: 0");
+        assertThrows(IllegalArgumentException.class, () -> load(yaml));
+    }
+
+    @Test
+    void rejectsNegativePellets() {
+        String yaml = FULL_YAML.replace(
+            "rate_per_second: 4",
+            "rate_per_second: 4\n  pellets_per_shot: -1");
+        assertThrows(IllegalArgumentException.class, () -> load(yaml));
+    }
+
+    @Test
+    void rejectsExcessivePellets() {
+        String yaml = FULL_YAML.replace(
+            "rate_per_second: 4",
+            "rate_per_second: 4\n  pellets_per_shot: 17");
+        assertThrows(IllegalArgumentException.class, () -> load(yaml));
+    }
 }

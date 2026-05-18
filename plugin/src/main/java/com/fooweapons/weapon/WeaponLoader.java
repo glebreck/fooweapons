@@ -47,7 +47,7 @@ public final class WeaponLoader {
             req(sounds, "dry_fire"),
             modes,
             defaultMode,
-            1,
+            parsePelletsPerShot(fire),
             MuzzleFlashConfig.defaults()
         );
     }
@@ -76,5 +76,16 @@ public final class WeaponLoader {
 
     private static Number num(Map<String, Object> map, String key) {
         return (Number) req(map, key);
+    }
+
+    private static int parsePelletsPerShot(Map<String, Object> fire) {
+        Object raw = fire.get("pellets_per_shot");
+        if (raw == null) return 1;
+        int n = ((Number) raw).intValue();
+        if (n < 1 || n > 16) {
+            throw new IllegalArgumentException(
+                "pellets_per_shot must be between 1 and 16, got " + n);
+        }
+        return n;
     }
 }
