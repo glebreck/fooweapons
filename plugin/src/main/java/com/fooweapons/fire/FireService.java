@@ -46,8 +46,7 @@ public final class FireService {
         Vector aim = player.getEyeLocation().getDirection();
 
         PelletDamageAggregator<LivingEntity> aggregator = new PelletDamageAggregator<>();
-        int pellets = Math.max(1, weapon.pelletsPerShot());
-        for (int i = 0; i < pellets; i++) {
+        for (int i = 0; i < weapon.pelletsPerShot(); i++) {
             Vector dir = SpreadCalculator.applySpread(aim, spread, random);
             Hitscan.Hit hit = Hitscan.fire(player, dir, weapon.range());
             if (hit == null) continue;
